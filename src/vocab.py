@@ -3,6 +3,8 @@ from typing import List, NamedTuple
 from bs4 import BeautifulSoup
 import requests
 
+from pronounce import get_pronunciation_url
+
 
 class Vocab(NamedTuple):
     id: int
@@ -10,6 +12,7 @@ class Vocab(NamedTuple):
     kanji: str
     pos: List[str]
     defn: str
+    url: str
 
 
 URL_FMT = 'https://jlptstudy.net/N{0}/lists/n{0}_vocab-list.html'
@@ -40,7 +43,8 @@ def get_vocab(level):
         idx, kana, kanji, pos, defn = [tag.text.strip() for tag in fields]
         if kanji == '':
             kanji = kana
-        return Vocab(int(idx), kana, kanji, pos.split(','), defn)
+        url = get_pronunciation_url(kanji)
+        return Vocab(int(idx), kana, kanji, pos.split(','), defn, url)
 
     rows = vocab_table.find_all('tr')
     return [process_row(r) for r in rows if len(r.find_all('td')) == 5]
