@@ -38,6 +38,8 @@ def get_vocab(level):
     def process_row(vocab):
         fields = vocab.find_all('td')
         idx, kana, kanji, pos, defn = [tag.text.strip() for tag in fields]
+        if kanji == '':
+            kanji = kana
         return Vocab(int(idx), kana, kanji, pos.split(','), defn)
 
     rows = vocab_table.find_all('tr')
