@@ -58,6 +58,12 @@ VOCAB_MODEL = genanki.Model(
 )
 
 
+class KanjiNote(genanki.Note):
+    @property
+    def guid(self):
+        return genanki.guid_for(self.fields[0], self.fields[1])
+
+
 def get_deck(jlpt_level):
     vocab = get_vocab(jlpt_level)
     deck = genanki.Deck(DECK_BASE_ID + jlpt_level, 'JLPT Vocab::N{}'.format(jlpt_level))
@@ -69,7 +75,7 @@ def get_deck(jlpt_level):
         else:
             audio = ''
 
-        note = genanki.Note(
+        note = KanjiNote(
             model=VOCAB_MODEL,
             fields=[str(v.id), v.kana, v.kanji, ', '.join(v.pos), v.defn, audio]
         )
