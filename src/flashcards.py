@@ -99,6 +99,6 @@ def get_package(jlpt_levels=None):
     return genanki.Package(decks, media_files=all_media)
 
 if __name__ == '__main__':
-    jlpt_level = 4
-    package = get_package([jlpt_level])
-    package.write_to_file('jlpt_n{}.apkg'.format(jlpt_level))
+    levels = [2]
+    package = get_package(levels)
+    package.write_to_file('jlpt_{}.apkg'.format('-'.join('n{}'.format(n) for n in levels)))

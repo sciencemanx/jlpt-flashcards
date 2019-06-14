@@ -18,7 +18,7 @@ class Vocab(NamedTuple):
 
 
 URL_FMT = 'https://jlptstudy.net/N{0}/lists/n{0}_vocab-list.html'
-JLPT_LEVELS = [2, 3, 4, 5]
+JLPT_LEVELS = [2, 4, 5]
 
 
 def get_vocab_html(level):
@@ -47,7 +47,7 @@ def get_vocab(level):
         if kanji == '':
             kanji = kana
 
-        path = '{}.ogg'.format(kanji.replace('/', '-'))
+        path = '{}.mp3'.format(kanji.replace('/', '-'))
         if not os.path.isfile(path):
             try:
                 path = download_pronunciation(kanji)
